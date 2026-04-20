@@ -1,0 +1,13 @@
+train: ../train/images
+val: ../valid/images
+test: ../test/images
+
+nc: 5
+names: ['emulsion', 'oil', 'oil-platform', 'sheen', 'ship']
+
+roboflow:
+  workspace: samirs-workspace-9uzpu
+  project: samirs-workspace-9uzpu
+  version: dataset
+  license: Private
+  url: https://app.roboflow.com/samirs-workspace-9uzpu/samirs-workspace-9uzpu/dataset
