@@ -1,0 +1,118 @@
+SETUP GUIDE
+
+Complete Setup Instructions for YOLOv8, YOLOv11, and Faster R-CNN
+
+This document explains how to install dependencies, prepare the dataset, and run all three object detection models included in this project.
+
+1. System Requirements
+Recommended
+Python 3.10+
+CUDA-enabled GPU (optional but recommended)
+8GB+ RAM
+Required
+Git
+Conda or virtual environment
+2. Create Virtual Environment
+conda create -n detection python=3.10 -y
+conda activate detection
+3. Install Core Dependencies
+pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118
+pip install ultralytics
+pip install opencv-python
+pip install numpy
+pip install matplotlib
+4. Dataset Setup
+
+Your dataset should follow this structure:
+
+data/
+│── train/
+│   ├── images/
+│   ├── train.json
+│
+│── valid/
+│   ├── images/
+│   ├── valid.json
+│
+│── test/
+│   ├── images/
+│   ├── test.json
+data.yaml (for YOLOv8 & YOLOv11)
+
+Create a file named data.yaml:
+
+train: data/train/images
+val: data/valid/images
+test: data/test/images
+
+names:
+  0: class1
+  1: class2
+  2: class3
+5. YOLOv8 Setup
+Train YOLOv8
+yolo detect train model=yolov8n.pt data=data.yaml epochs=50 imgsz=640
+Inference (Predictions)
+yolo detect predict model=best.pt source=your_image.jpg
+6. YOLOv11 Setup
+Train YOLOv11
+yolo detect train model=yolov11n.pt data=data.yaml epochs=50 imgsz=640
+Inference
+yolo detect predict model=best.pt source=your_image.jpg
+7. Faster R-CNN Setup
+Install TorchVision (if missing)
+pip install torchvision
+Train Faster R-CNN
+python fasterRCNN/train.py
+Inference with Faster R-CNN
+python fasterRCNN/infer.py --img path/to/image.jpg
+8. Large File Handling (Git LFS)
+
+If your model file (.pth / .pt) is above 100MB, enable Git LFS:
+
+git lfs install
+git lfs track "*.pth"
+git add .gitattributes
+git add path/to/model.pth
+git commit -m "Track large file with LFS"
+git push origin main
+9. Final Folder Structure
+Deep-Learning-Mini-Project/
+│── yolov8/
+│   ├── train.py
+│   ├── infer.py
+│   ├── best.pt
+│
+│── yolov11/
+│   ├── train.py
+│   ├── infer.py
+│   ├── best.pt
+│
+│── fasterRCNN/
+│   ├── train.py
+│   ├── infer.py
+│   ├── model.pth
+│
+│── data/
+│── SETUP.md
+│── README.md
+10. Troubleshooting
+Not detecting classes
+
+Check:
+
+names: list in data.yaml
+Annotation format
+Training epochs
+Git LFS errors
+
+Run:
+
+git rm --cached <large_file>
+
+Then re-add using LFS.
+
+11. Conclusion
+
+This setup document provides a complete guide to installing, training, and running YOLOv8, YOLOv11, and Faster R-CNN on your system.
+Use this as the standard installation reference for your project.
